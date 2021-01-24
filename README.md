@@ -1,7 +1,7 @@
-<p align="center">
-<h2>Gsm Pos</h2> <br/>
+<h2 align="center">
+Gsm Pos</h2> 
 
-</p>
+</h2>
 
 <p align="center">
   A desktop app made with flutter, enables store owners to keep track of sales.
