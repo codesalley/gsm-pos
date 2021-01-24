@@ -19,6 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
   String username;
   String password;
   String error;
+
   @override
   Widget build(BuildContext context) {
     final deviceWidth = MediaQuery.of(context).size.width;
@@ -65,32 +66,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       'LOG IN',
                       style: TextStyle(),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(
-                            top: 40,
-                            bottom: 20,
-                          ),
-                          child: CustomButtom(
-                            color: Color(0xff827F8D),
-                            title: 'Admin',
-                            onpress: () {},
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                            top: 40,
-                            bottom: 20,
-                          ),
-                          child: CustomButtom(
-                            color: Color(0xff827F8D),
-                            title: 'User',
-                            onpress: () {},
-                          ),
-                        ),
-                      ],
+                    Padding(
+                      padding: const EdgeInsets.all(18.0),
+                      child: Text('Enter username and password with no space'),
                     ),
                     SizedBox(
                       height: deviceHeight * 0.01,

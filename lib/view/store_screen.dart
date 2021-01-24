@@ -13,9 +13,24 @@ class StoreHome extends StatefulWidget {
 
 class _StoreHomeState extends State<StoreHome> {
   final productName = TextEditingController();
-  final productPrice = TextEditingController();
+  TextEditingController productPrice = TextEditingController();
   bool sett = false;
   var total = 0;
+  var price;
+
+  void getTotal() {
+    var box = Hive.box('storeinfo');
+    setState(() {
+      total = box.values
+          .fold(0, (previousValue, element) => previousValue + element[0]);
+    });
+  }
+
+  @override
+  void initState() {
+    getTotal();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +53,14 @@ class _StoreHomeState extends State<StoreHome> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: FlatButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: Text("Log Out")),
+                      ),
                       Text(
                         'HI, GSM DOCTOR',
                         style: TextStyle(fontSize: deviceWidth * 0.02),
@@ -82,8 +105,9 @@ class _StoreHomeState extends State<StoreHome> {
                         ],
                         controller: productPrice,
                         textAlign: TextAlign.center,
-                        decoration:
-                            kInputOtline.copyWith(labelText: 'Price \$ '),
+                        decoration: kInputOtline.copyWith(
+                          labelText: 'Price \$ ',
+                        ),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -92,13 +116,19 @@ class _StoreHomeState extends State<StoreHome> {
                             width: deviceWidth * 0.1,
                             title: 'ADD',
                             onpress: () {
-                              if (productPrice.text.isEmpty) {
+                              if (productPrice.value.text.isEmpty ||
+                                  productName.text.isEmpty) {
                                 productName.clear();
                                 productPrice.clear();
                                 return;
                               } else {
-                                Hive.box('storeinfo').put(productName.text,
-                                    [productPrice.text, DateTime.now()]);
+                                Hive.box('storeinfo').put(productName.text, [
+                                  int.parse(productPrice.text),
+                                  DateTime.now()
+                                ]);
+                                setState(() {
+                                  getTotal();
+                                });
 
                                 print(Hive.box('storeinfo').values.length);
                               }
@@ -135,7 +165,7 @@ class _StoreHomeState extends State<StoreHome> {
                     Align(
                       alignment: Alignment.topRight,
                       child: Text(
-                        ' ',
+                        'GH\$ ${total}.00',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
@@ -191,9 +221,11 @@ class _StoreHomeState extends State<StoreHome> {
                                         ),
                                       ),
                                       trailing: Text(
-                                        box.values
-                                            .elementAt(index)[0]
-                                            .toString(),
+                                        '${box.values.elementAt(index)[0]}'
+                                        // box.values
+                                        //     .elementAt(index)[0]
+                                        //     .toString(),
+                                        ,
                                         style: TextStyle(
                                           color: Colors.black,
                                         ),

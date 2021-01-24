@@ -18,7 +18,11 @@ class _AdminScreenState extends State<AdminScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text('Admin Panel'),
+          Text(''),
+          Container(
+            height: 50,
+            color: Colors.pinkAccent,
+          ),
           Container(
             margin: EdgeInsets.symmetric(horizontal: 150),
             alignment: Alignment.center,
@@ -66,7 +70,10 @@ class _AdminScreenState extends State<AdminScreen> {
                       });
                 }),
           ),
-          Text('Data delted here can not be retored')
+          Padding(
+            padding: EdgeInsets.all(deviceHeight * 0.05),
+            child: Text('Data delted here can not be retored'),
+          )
         ],
       )),
     );
